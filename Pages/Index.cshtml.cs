@@ -15,9 +15,10 @@ namespace CzechsInNHL.Pages
 {
     public class IndexModel : PageModel
     {
-        public async Task OnGetAsync()
+
+        public async Task<List<Player>> GetStatsAsync()
         {
-            var players = new List<Player>();
+            var _players = new List<Player>();
 
             foreach (var id in PlayerIDs._dict)
             {
@@ -39,13 +40,19 @@ namespace CzechsInNHL.Pages
                     player.fullName = responseToObjects.people[i].fullName;
                     player.primaryNumber = responseToObjects.people[i].primaryNumber;
 
-                    players.Add(player);
+                    _players.Add(player);
                 }                           
 
                 }
             }
+            return _players;
+        }
 
-            
+        public IList<Player> Players { get; set; }
+
+        public async Task OnGetAsync()
+        {
+            Players = await GetStatsAsync();            
         }
     }
 }
