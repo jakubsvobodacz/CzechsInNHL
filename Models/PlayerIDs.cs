@@ -8,7 +8,11 @@ namespace CzechsInNHL.Models
         {
             {"Filip Hronek", 8479425},
             {"Filip Chytil", 8480078},
-            {"David Pastrnak", 8477956}
+            {"David Pastrnak", 8477956},
+            {"David Krejci", 8471276},
+            {"Jakub Voracek", 8474161},
+            {"Radko Gudas", 8475462},
+            {"Ondrej Palat", 8476292}
         };
     }
 }
