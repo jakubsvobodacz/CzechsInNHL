@@ -9,53 +9,20 @@
     @foreach (var item in Model.Players)
     {
 
-            <a href="#" class="card">
+            <div href="#" class="card">
                 <div class="thumb" style="background-image: url(../images/PlayerProfilePhotos/@(item.lastName + ".jpg"));"></div>
                 <article>
-                    <h1>@Html.DisplayFor(modelItem => item.fullName)</h1>
+                    <h1>@Html.DisplayFor(modelItem => item.fullName) | #@Html.DisplayFor(modelItem => item.primaryNumber)</h1>
+                    <span>@Html.DisplayFor(modelItem => item.position)</span>
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Profil</th>
+                                <th>Poslední zápas</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Věk</td>
-                                <td>@Html.DisplayFor(modelItem => item.currentAge)</td>
-                            </tr>
-                            <tr>
-                                <td>Cislo</td>
-                                <td>@Html.DisplayFor(modelItem => item.primaryNumber)</td>
-                            </tr>
-                            <tr>
-                                <td>Vyska</td>
-                                <td>@Html.DisplayFor(modelItem => item.height)</td>
-                            </tr>
-                            <tr>
-                                <td>Vaha</td>
-                                <td>@Html.DisplayFor(modelItem => item.weight) kg</td>
-                            </tr>
-                            <tr>
-                                <td>Narozen</td>
-                                <td>@Html.DisplayFor(modelItem => item.birthCity)</td>
-                            </tr>
-                            <tr>
-                                <td>Pozice</td>
-                                <td>@Html.DisplayFor(modelItem => item.position)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Sezona</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Goly</td>
+                                <td>Góly</td>
                                 <td>@Html.DisplayFor(modelItem => item.goals)</td>
                             </tr>
                             <tr>
@@ -67,35 +34,24 @@
                                 <td>@Html.DisplayFor(modelItem => item.plusMinus)</td>
                             </tr>
                             <tr>
-                                <td>Trestne minuty</td>
-                                <td>@Html.DisplayFor(modelItem => item.penaltyMinutes) kg</td>
+                                <td>Trestné minuty</td>
+                                <td>@Html.DisplayFor(modelItem => item.penaltyMinutes)</td>
                             </tr>
                             <tr>
                                 <td>Hity</td>
                                 <td>@Html.DisplayFor(modelItem => item.hits)</td>
                             </tr>
                             <tr>
-                                <td>Prumerny cas na lede</td>
+                                <td>Průměrný čas na ledě</td>
                                 <td>@Html.DisplayFor(modelItem => item.timeOnIcePerGame)</td>
                             </tr>
                             <tr>
-                                <td>Zapasy</td>
-                                <td>@Html.DisplayFor(modelItem => item.games)</td>
-                            </tr>
-                            <tr>
-                                <td>Uspesnost strel</td>
-                                <td>@Html.DisplayFor(modelItem => item.shotPct)</td>
-                            </tr>
                         </tbody>
                     </table>
-
-
-                    <span> Detailni Statistika </span>
-
+                    <a href="#"><span> Detailni statistika </span></a>
+                    <img id="bottom" class="teamLogo" src="~/images/TeamLogos/Boston Bruins.png" />
                 </article>
-            </a>
-
-
+            </div>
     }
 </div>
 

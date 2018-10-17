@@ -79,7 +79,7 @@ html {
     }
   }
 .band a:hover {
-    text-decoration: none;
+    text-decoration: underline;
 }
   
   .card {
@@ -138,3 +138,15 @@ html {
       font-size: 24px;
     }
   }*/
+
+#bottom {
+    position: absolute;
+    top: 30%;
+    right: 3%;
+   
+}
+
+
+.teamLogo{
+    max-height: 50px;
+}
