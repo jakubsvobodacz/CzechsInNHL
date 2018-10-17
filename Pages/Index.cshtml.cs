@@ -37,10 +37,33 @@ namespace CzechsInNHL.Pages
                 foreach (var person in responseToObjects.people)
                 {
                     var player = new Player();
-                    player.fullName = person.fullName;
-                    player.primaryNumber = person.primaryNumber;
 
-                    _players.Add(player);
+                        //profile
+                        player.fullName = person.fullName;
+                        player.firstName = person.firstName;
+                        player.lastName = person.lastName;
+                        player.primaryNumber = person.primaryNumber;
+                        player.currentAge = person.currentAge;
+                        player.birthCity = person.birthCity;
+                        player.height = person.height;
+                        player.weight = person.weight * 0.45;
+                        player.position = person.primaryPosition.name;
+                        //stats                    
+                        foreach (var stat in person.stats)
+                        {                         
+                            foreach (var split in stat.splits)
+                            {
+                                player.goals = split.stat.goals;
+                                player.assists = split.stat.assists;
+                                player.plusMinus = split.stat.plusMinus;
+                                player.hits = split.stat.hits;
+                                player.timeOnIcePerGame = split.stat.timeOnIcePerGame;
+                                player.penaltyMinutes = split.stat.penaltyMinutes;
+                                player.games = split.stat.games;
+                                player.shotPct = split.stat.shotPct;
+                            }
+                        }
+                        _players.Add(player);
                 }                           
 
                 }
