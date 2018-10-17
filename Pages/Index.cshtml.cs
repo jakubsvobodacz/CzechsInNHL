@@ -34,11 +34,11 @@ namespace CzechsInNHL.Pages
                 var stringResult = await response.Content.ReadAsStringAsync();
                 var responseToObjects = JsonConvert.DeserializeObject<RootObject>(stringResult);
 
-                for (int i = 0; i < responseToObjects.people.Count-1; i++)
+                foreach (var person in responseToObjects.people)
                 {
                     var player = new Player();
-                    player.fullName = responseToObjects.people[i].fullName;
-                    player.primaryNumber = responseToObjects.people[i].primaryNumber;
+                    player.fullName = person.fullName;
+                    player.primaryNumber = person.primaryNumber;
 
                     _players.Add(player);
                 }                           
@@ -52,7 +52,8 @@ namespace CzechsInNHL.Pages
 
         public async Task OnGetAsync()
         {
-            Players = await GetStatsAsync();            
+            Players = await GetStatsAsync();
+            
         }
     }
 }
