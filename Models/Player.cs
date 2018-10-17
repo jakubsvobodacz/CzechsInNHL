@@ -12,6 +12,7 @@ namespace CzechsInNHL.Models
         public string height { get; set; }
         public double weight { get; set; }
         public string position { get; set; }
+        public string currentTeam { get; set; }
 
         //stats
         public int assists { get; set; }

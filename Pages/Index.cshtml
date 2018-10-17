@@ -9,7 +9,7 @@
     @foreach (var item in Model.Players)
     {
 
-            <a href="https://design.tutsplus.com/articles/international-artist-feature-malaysia--cms-26852" class="card">
+            <a href="#" class="card">
                 <div class="thumb" style="background-image: url(../images/PlayerProfilePhotos/@(item.lastName + ".jpg"));"></div>
                 <article>
                     <h1>@Html.DisplayFor(modelItem => item.fullName)</h1>
@@ -47,7 +47,7 @@
                         </tbody>
                     </table>
 
-                    <table>
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>Sezona</th>

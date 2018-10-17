@@ -48,6 +48,7 @@ namespace CzechsInNHL.Pages
                         player.height = person.height;
                         player.weight = person.weight * 0.45;
                         player.position = person.primaryPosition.name;
+                        player.currentTeam = person.currentTeam.name;
                         //stats                    
                         foreach (var stat in person.stats)
                         {                         
