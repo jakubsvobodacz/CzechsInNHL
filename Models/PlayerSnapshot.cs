@@ -23,5 +23,6 @@ namespace CzechsInNHL.Models
         public int plusMinus { get; set; }
         public string timeOnIce { get; set; }
         public string lastGameDate { get; set; }
+        public string lastOpponent { get; set; }
     }
 }

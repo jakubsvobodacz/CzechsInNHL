@@ -70,6 +70,7 @@ namespace CzechsInNHL.Pages
                                 player.penaltyMinutes = data.stat.penaltyMinutes;
                                 player.lastGameDate = data.date;
                                 player.shotPct = data.stat.shotPct;
+                                player.lastOpponent = data.opponent.name;
                             }
                             else
                             {
@@ -77,9 +78,9 @@ namespace CzechsInNHL.Pages
                                 player.assists = 0;
                                 player.plusMinus = 0;
                                 player.hits = 0;
-                                player.timeOnIce = "no data";
-                                player.penaltyMinutes = "no data";
-                                player.lastGameDate = "no data";
+                                player.timeOnIce = "data nejsou k dispozici";
+                                player.penaltyMinutes = "data nejsou k dispozici";
+                                player.lastGameDate = "data nejsou k dispozici";
                                 player.shotPct = 0;
                             }
                             

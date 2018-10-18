@@ -17,42 +17,37 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Poslední zápas</th>
+                                <th>Poslední zápas @Html.DisplayFor(modelItem => item.lastGameDate) proti @Html.DisplayFor(modelItem => item.lastOpponent)</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Góly</td>
+                                <td>Góly:</td>
                                 <td>@Html.DisplayFor(modelItem => item.goals)</td>
                             </tr>
                             <tr>
-                                <td>Assistence</td>
+                                <td>Asistence:</td>
                                 <td>@Html.DisplayFor(modelItem => item.assists)</td>
                             </tr>
                             <tr>
-                                <td>+/-</td>
+                                <td>+/- :</td>
                                 <td>@Html.DisplayFor(modelItem => item.plusMinus)</td>
                             </tr>
                             <tr>
-                                <td>Trestné minuty</td>
+                                <td>Trestné minuty:</td>
                                 <td>@Html.DisplayFor(modelItem => item.penaltyMinutes)</td>
                             </tr>
                             <tr>
-                                <td>Hity</td>
+                                <td>Hity:</td>
                                 <td>@Html.DisplayFor(modelItem => item.hits)</td>
                             </tr>
                             <tr>
-                                <td>Průměrný čas na ledě</td>
+                                <td>Čas na ledě:</td>
                                 <td>@Html.DisplayFor(modelItem => item.timeOnIce)</td>
                             </tr>
-                            <tr>
-                                <td>Posledni zapas</td>
-                                <td>@Html.DisplayFor(modelItem => item.lastGameDate)</td>
-                            </tr>
-                            <tr>
                         </tbody>
                     </table>
-                    <a href="#"><span> Detailni statistika </span></a>
+                    <a href="#"><span> Detailní Statistika Hráče</span></a>
                     <img id="bottom" class="teamLogo" src="~/images/TeamLogos/@(item.currentTeam + ".png")" />
                 </article>
             </div>
