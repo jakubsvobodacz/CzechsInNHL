@@ -31,7 +31,11 @@ namespace CzechsInNHL.Models
             {"Vladimir Sobotka", 8471743},
             {"Libor Sulak", 8480161},
             {"Jakub Vrana", 8477944},
-            {"Pavel Zacha", 8478401}
+            {"Pavel Zacha", 8478401},
+            {"Andrej Sustr", 8477205},
+            {"Lukas Sedlak", 8476310},
+            {"Tomas Hyka", 8476617},
+            {"Jakub Jerabek", 8480143}
         };
     }
 }

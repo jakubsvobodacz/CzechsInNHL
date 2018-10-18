@@ -16,9 +16,9 @@ namespace CzechsInNHL.Pages
     public class IndexModel : PageModel
     {
 
-        public async Task<List<Player>> GetStatsAsync()
+        public async Task<List<PlayerSnapshot>> GetLastGameStatsAsync()
         {
-            var _players = new List<Player>();
+            var _players = new List<PlayerSnapshot>();
 
             foreach (var id in PlayerIDs._dict)
             {
@@ -27,16 +27,23 @@ namespace CzechsInNHL.Pages
                 {
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
                 client.BaseAddress = new Uri("https://statsapi.web.nhl.com");
+                
+                //Ask for season stats and profile info
+                //var responseSeasonStats = await client.GetAsync($"/api/v1/people/{playerId}?hydrate=stats(splits=statsSingleSeason)");
+                //responseSeasonStats.EnsureSuccessStatusCode();
+                //var stringResultSeasonStats = await responseSeasonStats.Content.ReadAsStringAsync();
+                //var responseSeasonStatsToObjects = JsonConvert.DeserializeObject<RootObject>(stringResultSeasonStats);
 
-                var response = await client.GetAsync($"/api/v1/people/{playerId}?hydrate=stats(splits=statsSingleSeason)");
-                response.EnsureSuccessStatusCode();
-
-                var stringResult = await response.Content.ReadAsStringAsync();
-                var responseToObjects = JsonConvert.DeserializeObject<RootObject>(stringResult);
-
-                foreach (var person in responseToObjects.people)
+                //Ask for game log stats
+                var responseGameLog = await client.GetAsync($"/api/v1/people/{playerId}?hydrate=stats(splits=gameLog)");
+                responseGameLog.EnsureSuccessStatusCode();
+                var stringResultGameLog = await responseGameLog.Content.ReadAsStringAsync();
+                var responseToObjectsGameLog = JsonConvert.DeserializeObject<RootObjectGameLog>(stringResultGameLog);
+                
+                //Process Season Data
+                foreach (var person in responseToObjectsGameLog.people)
                 {
-                    var player = new Player();
+                    var player = new PlayerSnapshot();
 
                         //profile
                         player.fullName = person.fullName;
@@ -49,20 +56,47 @@ namespace CzechsInNHL.Pages
                         player.weight = person.weight * 0.45;
                         player.position = person.primaryPosition.name;
                         player.currentTeam = person.currentTeam.name;
-                        //stats                    
+                        //Season stats                    
                         foreach (var stat in person.stats)
-                        {                         
-                            foreach (var split in stat.splits)
+                        {
+                            var data = stat.splits.FirstOrDefault();
+                            if (data != null)
                             {
-                                player.goals = split.stat.goals;
-                                player.assists = split.stat.assists;
-                                player.plusMinus = split.stat.plusMinus;
-                                player.hits = split.stat.hits;
-                                player.timeOnIcePerGame = split.stat.timeOnIcePerGame;
-                                player.penaltyMinutes = split.stat.penaltyMinutes;
-                                player.games = split.stat.games;
-                                player.shotPct = split.stat.shotPct;
+                                player.goals = data.stat.goals;
+                                player.assists = data.stat.assists;
+                                player.plusMinus = data.stat.plusMinus;
+                                player.hits = data.stat.hits;
+                                player.timeOnIce = data.stat.timeOnIce;
+                                player.penaltyMinutes = data.stat.penaltyMinutes;
+                                player.lastGameDate = data.date;
+                                player.shotPct = data.stat.shotPct;
                             }
+                            else
+                            {
+                                player.goals = 0;
+                                player.assists = 0;
+                                player.plusMinus = 0;
+                                player.hits = 0;
+                                player.timeOnIce = "no data";
+                                player.penaltyMinutes = "no data";
+                                player.lastGameDate = "no data";
+                                player.shotPct = 0;
+                            }
+                            
+
+                            
+
+                            //foreach (var split in stat.splits)
+                            //{
+                            //    player.goals = split.stat.goals;
+                            //    player.assists = split.stat.assists;
+                            //    player.plusMinus = split.stat.plusMinus;
+                            //    player.hits = split.stat.hits;
+                            //    player.timeOnIce = split.stat.timeOnIce;
+                            //    player.penaltyMinutes = split.stat.penaltyMinutes;
+                            //    player.lastGameDate = split.date;
+                            //    player.shotPct = split.stat.shotPct;
+                            //}
                         }
                         _players.Add(player);
                 }                           
@@ -72,11 +106,11 @@ namespace CzechsInNHL.Pages
             return _players;
         }
 
-        public IList<Player> Players { get; set; }
+        public IList<PlayerSnapshot> Players { get; set; }
 
         public async Task OnGetAsync()
         {
-            Players = await GetStatsAsync();
+            Players = await GetLastGameStatsAsync();
             
         }
     }

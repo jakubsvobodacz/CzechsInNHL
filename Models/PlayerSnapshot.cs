@@ -1,6 +1,6 @@
 namespace CzechsInNHL.Models
 {
-    public class Player
+    public class PlayerSnapshot
     {
         //person-specific data
         public string fullName { get; set; }
@@ -21,7 +21,7 @@ namespace CzechsInNHL.Models
         public int hits { get; set; }
         public string penaltyMinutes { get; set; }
         public int plusMinus { get; set; }
-        public string timeOnIcePerGame { get; set; }
-        public int games { get; set; }
+        public string timeOnIce { get; set; }
+        public string lastGameDate { get; set; }
     }
 }
