@@ -112,14 +112,25 @@ namespace CzechsInNHL.Pages
 
                 }
             }
-            return _players;
+            return _players.OrderByDescending(x => x.lastGameDate).ToList();
         }
 
         public IList<PlayerSnapshot> Players { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(string searchText)
         {
-            Players = await GetLastGameStatsAsync();
+
+            if (!String.IsNullOrEmpty(searchText))
+            {
+                Players = await GetLastGameStatsAsync();
+                Players = Players.Where(x => x.fullName.ToLower().Contains(searchText) || x.currentTeam.ToLower().Contains(searchText)).ToList();
+                var a = 1;
+            }
+            else
+            {
+                Players = await GetLastGameStatsAsync();
+            }
+            
             
         }
     }

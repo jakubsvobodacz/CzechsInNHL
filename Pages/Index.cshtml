@@ -12,17 +12,16 @@
         @foreach (var item in Model.Players)
         {
             <div class="col-md-4">
-                <div class="card">
+                <div class="card mb-3">
                     <img class="card-img-top" src="~/images/PlayerProfilePhotos/@(item.lastName + ".jpg")" alt="Card image cap">
+                    <img class="teamLogo img-fluid" src="~/images/TeamLogos/@(item.currentTeam + ".png")" />
                     <div class="card-body">
-                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.fullName) | #@Html.DisplayFor(modelItem => item.primaryNumber)</h5>
-                        <p class="card-text">@Html.DisplayFor(modelItem => item.position)</p>
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">@Html.DisplayFor(modelItem => item.fullName) | #@Html.DisplayFor(modelItem => item.primaryNumber)</h5>
+                            <p class="card-text text-right"> <strong> @Html.DisplayFor(modelItem => item.position) </strong> </p>
+                        </div>
+                        <p> Poslední zápas @Html.DisplayFor(modelItem => item.lastGameDate) proti @Html.DisplayFor(modelItem => item.lastOpponent) </p>
                         <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Poslední zápas @Html.DisplayFor(modelItem => item.lastGameDate) proti @Html.DisplayFor(modelItem => item.lastOpponent)</th>
-                                </tr>
-                            </thead>
                             <tbody>
                                 <tr>
                                     <td>Góly:</td>
@@ -50,9 +49,6 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <a href="#"><span> Detailní Statistika Hráče</span></a>
-                        <img id="bottom" class="teamLogo" src="~/images/TeamLogos/@(item.currentTeam + ".png")" />
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                     </div>
                 </div>
             </div>
