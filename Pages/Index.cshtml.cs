@@ -55,7 +55,15 @@ namespace CzechsInNHL.Pages
                         player.height = person.height;
                         player.weight = person.weight * 0.45;
                         player.position = person.primaryPosition.name;
-                        player.currentTeam = person.currentTeam.name;
+                        if (String.IsNullOrEmpty(person.currentTeam.name))
+                        {
+                            player.currentTeam = "There is a team missing for some reason";                          
+                        }
+                        else
+                        {
+                            player.currentTeam = person.currentTeam.name;
+                        }
+                       
                         //Season stats                    
                         foreach (var stat in person.stats)
                         {

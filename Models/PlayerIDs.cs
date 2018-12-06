@@ -24,7 +24,6 @@ namespace CzechsInNHL.Models
             {"Michal Kempny", 8479482},
             {"Martin Necas", 8480039},                                                                    
             {"Tomas Nosek", 8477931},
-            {"Tomas Plekanec", 8469521},
             {"Roman Polak", 8471392},
             {"Jan Rutta", 8480172},
             {"Dominik Simon", 8478866},

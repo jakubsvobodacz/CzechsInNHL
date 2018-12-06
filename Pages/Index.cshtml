@@ -5,53 +5,61 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="band">
-    @foreach (var item in Model.Players)
-    {
+<div class="container">
 
-            <div href="#" class="card">
-                <div class="thumb" style="background-image: url(../images/PlayerProfilePhotos/@(item.lastName + ".jpg"));"></div>
-                <article>
-                    <h1>@Html.DisplayFor(modelItem => item.fullName) | #@Html.DisplayFor(modelItem => item.primaryNumber)</h1>
-                    <span>@Html.DisplayFor(modelItem => item.position)</span>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Poslední zápas @Html.DisplayFor(modelItem => item.lastGameDate) proti @Html.DisplayFor(modelItem => item.lastOpponent)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Góly:</td>
-                                <td>@Html.DisplayFor(modelItem => item.goals)</td>
-                            </tr>
-                            <tr>
-                                <td>Asistence:</td>
-                                <td>@Html.DisplayFor(modelItem => item.assists)</td>
-                            </tr>
-                            <tr>
-                                <td>+/- :</td>
-                                <td>@Html.DisplayFor(modelItem => item.plusMinus)</td>
-                            </tr>
-                            <tr>
-                                <td>Trestné minuty:</td>
-                                <td>@Html.DisplayFor(modelItem => item.penaltyMinutes)</td>
-                            </tr>
-                            <tr>
-                                <td>Hity:</td>
-                                <td>@Html.DisplayFor(modelItem => item.hits)</td>
-                            </tr>
-                            <tr>
-                                <td>Čas na ledě:</td>
-                                <td>@Html.DisplayFor(modelItem => item.timeOnIce)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <a href="#"><span> Detailní Statistika Hráče</span></a>
-                    <img id="bottom" class="teamLogo" src="~/images/TeamLogos/@(item.currentTeam + ".png")" />
-                </article>
+    <div class="row">
+
+        @foreach (var item in Model.Players)
+        {
+            <div class="col-md-4">
+                <div class="card">
+                    <img class="card-img-top" src="~/images/PlayerProfilePhotos/@(item.lastName + ".jpg")" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.fullName) | #@Html.DisplayFor(modelItem => item.primaryNumber)</h5>
+                        <p class="card-text">@Html.DisplayFor(modelItem => item.position)</p>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Poslední zápas @Html.DisplayFor(modelItem => item.lastGameDate) proti @Html.DisplayFor(modelItem => item.lastOpponent)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Góly:</td>
+                                    <td>@Html.DisplayFor(modelItem => item.goals)</td>
+                                </tr>
+                                <tr>
+                                    <td>Asistence:</td>
+                                    <td>@Html.DisplayFor(modelItem => item.assists)</td>
+                                </tr>
+                                <tr>
+                                    <td>+/- :</td>
+                                    <td>@Html.DisplayFor(modelItem => item.plusMinus)</td>
+                                </tr>
+                                <tr>
+                                    <td>Trestné minuty:</td>
+                                    <td>@Html.DisplayFor(modelItem => item.penaltyMinutes)</td>
+                                </tr>
+                                <tr>
+                                    <td>Hity:</td>
+                                    <td>@Html.DisplayFor(modelItem => item.hits)</td>
+                                </tr>
+                                <tr>
+                                    <td>Čas na ledě:</td>
+                                    <td>@Html.DisplayFor(modelItem => item.timeOnIce)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <a href="#"><span> Detailní Statistika Hráče</span></a>
+                        <img id="bottom" class="teamLogo" src="~/images/TeamLogos/@(item.currentTeam + ".png")" />
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
             </div>
-    }
-</div>
 
+
+
+        }
+    </div>
+</div>
 
