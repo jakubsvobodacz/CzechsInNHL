@@ -9,5 +9,6 @@ namespace CzechsInNHL.Services
     {
         public string StorageConnectionString { get; set; }
         public string TableReference { get; set; }
+        public string ContainerReference { get; set; }
     }
 }

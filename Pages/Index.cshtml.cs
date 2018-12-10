@@ -14,6 +14,7 @@ using Microsoft.Extensions.Options;
 using CzechsInNHL.Services;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace CzechsInNHL.Pages
 {
@@ -21,6 +22,7 @@ namespace CzechsInNHL.Pages
     {
         private readonly string _connectionString;
         private readonly string _tableReference;
+        private readonly string _containerReference;
 
         public IndexModel(IOptions<Storage> storage )
         {

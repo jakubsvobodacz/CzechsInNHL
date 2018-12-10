@@ -13,7 +13,7 @@
         {
             <div class="col-md-4">
                 <div class="card mb-3">
-                    <img class="card-img-top" src="~/images/PlayerProfilePhotos/@(item.lastName + ".jpg")" alt="Card image cap">
+                    <img class="card-img-top" src="https://czechsinnhl.blob.core.windows.net/players/@(item.lastName.ToLower() + ".jpg")" alt="Card image cap">
                     <img class="teamLogo img-fluid" src="~/images/TeamLogos/@(item.currentTeam + ".png")" />
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
