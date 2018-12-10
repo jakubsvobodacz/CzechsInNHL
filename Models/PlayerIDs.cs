@@ -34,7 +34,11 @@ namespace CzechsInNHL.Models
             {"Andrej Sustr", 8477205},
             {"Lukas Sedlak", 8476310},
             {"Tomas Hyka", 8476617},
-            {"Jakub Jerabek", 8480143}
+            {"Jakub Jerabek", 8480143},
+            {"Lukas Radil", 8480780},
+            {"Radim Simek", 8480160}
+
+
         };
     }
 }

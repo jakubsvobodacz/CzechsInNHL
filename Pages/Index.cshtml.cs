@@ -10,14 +10,46 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Http;
 using CzechsInNHL.Models;
+using Microsoft.Extensions.Options;
+using CzechsInNHL.Services;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Table;
 
 namespace CzechsInNHL.Pages
 {
     public class IndexModel : PageModel
     {
+        private readonly string _connectionString;
+        private readonly string _tableReference;
+
+        public IndexModel(IOptions<Storage> storage )
+        {
+            _connectionString = storage.Value.StorageConnectionString;
+            _tableReference = storage.Value.TableReference;
+        }
 
         public async Task<List<PlayerSnapshot>> GetLastGameStatsAsync()
         {
+            //Retrieve sotrage account
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_connectionString);
+
+            // Create the table client.
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+            // Create the CloudTable object that represents the "players" table.
+            CloudTable table = tableClient.GetTableReference(_tableReference);
+            // Construct the query operation for all customer entities where PartitionKey="Smith".
+            TableQuery<PlayerEntity> query = new TableQuery<PlayerEntity>();
+
+            TableContinuationToken token = null;
+
+
+
+
+
+
+
+            var result = table.ExecuteQuerySegmentedAsync(query, token);
+
             var _players = new List<PlayerSnapshot>();
 
             foreach (var id in PlayerIDs._dict)
