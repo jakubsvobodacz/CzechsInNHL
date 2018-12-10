@@ -42,109 +42,86 @@ namespace CzechsInNHL.Pages
 
             TableContinuationToken token = null;
 
-
-
-
-
-
-
-            var result = table.ExecuteQuerySegmentedAsync(query, token);
-
-            var _players = new List<PlayerSnapshot>();
-
-            foreach (var id in PlayerIDs._dict)
+            do
             {
-                var playerId = id.Value;
-                using (var client = new HttpClient())
-                {
-                client.DefaultRequestHeaders.Add("Accept", "application/json");
-                client.BaseAddress = new Uri("https://statsapi.web.nhl.com");
-                
-                //Ask for season stats and profile info
-                //var responseSeasonStats = await client.GetAsync($"/api/v1/people/{playerId}?hydrate=stats(splits=statsSingleSeason)");
-                //responseSeasonStats.EnsureSuccessStatusCode();
-                //var stringResultSeasonStats = await responseSeasonStats.Content.ReadAsStringAsync();
-                //var responseSeasonStatsToObjects = JsonConvert.DeserializeObject<RootObject>(stringResultSeasonStats);
+                var _players = new List<PlayerSnapshot>();
 
-                //Ask for game log stats
-                var responseGameLog = await client.GetAsync($"/api/v1/people/{playerId}?hydrate=stats(splits=gameLog)");
-                responseGameLog.EnsureSuccessStatusCode();
-                var stringResultGameLog = await responseGameLog.Content.ReadAsStringAsync();
-                var responseToObjectsGameLog = JsonConvert.DeserializeObject<RootObjectGameLog>(stringResultGameLog);
-                
-                //Process Season Data
-                foreach (var person in responseToObjectsGameLog.people)
-                {
-                    var player = new PlayerSnapshot();
+                TableQuerySegment<PlayerEntity> resultSegment = await table.ExecuteQuerySegmentedAsync(query, token);
+                token = resultSegment.ContinuationToken;
 
-                        //profile
-                        player.fullName = person.fullName;
-                        player.firstName = person.firstName;
-                        player.lastName = person.lastName;
-                        player.primaryNumber = person.primaryNumber;
-                        player.currentAge = person.currentAge;
-                        player.birthCity = person.birthCity;
-                        player.height = person.height;
-                        player.weight = person.weight * 0.45;
-                        player.position = person.primaryPosition.name;
-                        if (String.IsNullOrEmpty(person.currentTeam.name))
+                foreach (PlayerEntity entity in resultSegment.Results)
+                {
+                    var playerId = entity.PartitionKey;
+                    using (var client = new HttpClient())
+                    {
+                        client.DefaultRequestHeaders.Add("Accept", "application/json");
+                        client.BaseAddress = new Uri("https://statsapi.web.nhl.com");
+
+                        //Ask for game log stats
+                        var responseGameLog = await client.GetAsync($"/api/v1/people/{playerId}?hydrate=stats(splits=gameLog)");
+                        responseGameLog.EnsureSuccessStatusCode();
+                        var stringResultGameLog = await responseGameLog.Content.ReadAsStringAsync();
+                        var responseToObjectsGameLog = JsonConvert.DeserializeObject<RootObjectGameLog>(stringResultGameLog);
+
+                        //Process Season Data
+                        foreach (var person in responseToObjectsGameLog.people)
                         {
-                            player.currentTeam = "There is a team missing for some reason";                          
-                        }
-                        else
-                        {
-                            player.currentTeam = person.currentTeam.name;
-                        }
-                       
-                        //Season stats                    
-                        foreach (var stat in person.stats)
-                        {
-                            var data = stat.splits.FirstOrDefault();
-                            if (data != null)
+                            var player = new PlayerSnapshot();
+
+                            //profile
+                            player.fullName = person.fullName;
+                            player.firstName = person.firstName;
+                            player.lastName = person.lastName;
+                            player.primaryNumber = person.primaryNumber;
+                            player.currentAge = person.currentAge;
+                            player.birthCity = person.birthCity;
+                            player.height = person.height;
+                            player.weight = person.weight * 0.45;
+                            player.position = person.primaryPosition.name;
+                            if (String.IsNullOrEmpty(person.currentTeam.name))
                             {
-                                player.goals = data.stat.goals;
-                                player.assists = data.stat.assists;
-                                player.plusMinus = data.stat.plusMinus;
-                                player.hits = data.stat.hits;
-                                player.timeOnIce = data.stat.timeOnIce;
-                                player.penaltyMinutes = data.stat.penaltyMinutes;
-                                player.lastGameDate = data.date;
-                                player.shotPct = data.stat.shotPct;
-                                player.lastOpponent = data.opponent.name;
+                                player.currentTeam = "There is a team missing for some reason";
                             }
                             else
                             {
-                                player.goals = 0;
-                                player.assists = 0;
-                                player.plusMinus = 0;
-                                player.hits = 0;
-                                player.timeOnIce = "data nejsou k dispozici";
-                                player.penaltyMinutes = "data nejsou k dispozici";
-                                player.lastGameDate = "data nejsou k dispozici";
-                                player.shotPct = 0;
+                                player.currentTeam = person.currentTeam.name;
                             }
-                            
 
-                            
-
-                            //foreach (var split in stat.splits)
-                            //{
-                            //    player.goals = split.stat.goals;
-                            //    player.assists = split.stat.assists;
-                            //    player.plusMinus = split.stat.plusMinus;
-                            //    player.hits = split.stat.hits;
-                            //    player.timeOnIce = split.stat.timeOnIce;
-                            //    player.penaltyMinutes = split.stat.penaltyMinutes;
-                            //    player.lastGameDate = split.date;
-                            //    player.shotPct = split.stat.shotPct;
-                            //}
+                            //Season stats                    
+                            foreach (var stat in person.stats)
+                            {
+                                var data = stat.splits.FirstOrDefault();
+                                if (data != null)
+                                {
+                                    player.goals = data.stat.goals;
+                                    player.assists = data.stat.assists;
+                                    player.plusMinus = data.stat.plusMinus;
+                                    player.hits = data.stat.hits;
+                                    player.timeOnIce = data.stat.timeOnIce;
+                                    player.penaltyMinutes = data.stat.penaltyMinutes;
+                                    player.lastGameDate = data.date;
+                                    player.shotPct = data.stat.shotPct;
+                                    player.lastOpponent = data.opponent.name;
+                                }
+                                else
+                                {
+                                    player.goals = 0;
+                                    player.assists = 0;
+                                    player.plusMinus = 0;
+                                    player.hits = 0;
+                                    player.timeOnIce = "data nejsou k dispozici";
+                                    player.penaltyMinutes = "data nejsou k dispozici";
+                                    player.lastGameDate = "data nejsou k dispozici";
+                                    player.shotPct = 0;
+                                }
+                            }
+                            _players.Add(player);
                         }
-                        _players.Add(player);
-                }                           
 
+                    }
                 }
-            }
-            return _players.OrderByDescending(x => x.lastGameDate).ToList();
+                return _players.OrderByDescending(x => x.lastGameDate).ToList();
+            } while (token != null);
         }
 
         public IList<PlayerSnapshot> Players { get; set; }
